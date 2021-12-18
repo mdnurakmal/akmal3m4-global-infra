@@ -146,19 +146,5 @@ resource "google_service_account_iam_member" "cloudrun-iam" {
   depends_on = [google_service_account.cloudrun-sa]
 }
 
-resource "google_cloud_run_service_iam_member" "game-server-invoker" {
-  location = google_cloud_run_service.game-server.location
-  project = google_cloud_run_service.game-server.project
-  service = google_cloud_run_service.game-server.name
-  role = "roles/run.invoker"
-  member = "allAuthenticatedUsers"
-}
 
-resource "google_cloud_run_service_iam_member" "game-client-invoker" {
-  location = google_cloud_run_service.game-client.location
-  project = google_cloud_run_service.game-client.project
-  service = google_cloud_run_service.game-client.name
-  role = "roles/run.invoker"
-  member = "allAuthenticatedUsers"
-}
 */
