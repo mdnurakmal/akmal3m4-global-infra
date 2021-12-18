@@ -69,12 +69,12 @@ resource "google_compute_url_map" "default" {
 
     path_rule {
       paths   = ["/client"]
-      service = projects/group4-3m4/global/backendServices/game-client-backend-service
+      service = "projects/group4-3m4/global/backendServices/game-client-backend-service"
     }
 
         path_rule {
       paths   = ["/server"]
-      service = projects/group4-3m4/global/backendServices/game-server-backend-service
+      service = "projects/group4-3m4/global/backendServices/game-server-backend-service"
     }
   }
 }
