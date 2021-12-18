@@ -107,12 +107,20 @@ resource "google_compute_global_forwarding_rule" "https-forwarding-rule" {
 resource "google_compute_target_http_proxy" "default" {
   name        = "http-target-proxy"
   url_map     = google_compute_url_map.http.id
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_target_https_proxy" "default" {
   name             = "https-target-proxy"
   url_map          = google_compute_url_map.http.id
   ssl_certificates = [google_compute_managed_ssl_certificate.default.id]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "google_compute_managed_ssl_certificate" "default" {
