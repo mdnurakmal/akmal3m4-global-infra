@@ -22,7 +22,7 @@ resource "google_compute_backend_service" "game-server-backend-service" {
   provider = google-beta
   project = var.project_id
   name                            = "game-server-backend-service"
-  enable_cdn                      = true
+  enable_cdn                      = false
   connection_draining_timeout_sec = 10
 
   backend {
@@ -40,7 +40,7 @@ resource "google_compute_backend_service" "game-client-backend-service" {
   provider = google-beta
   project = var.project_id
   name                            = "game-client-backend-service"
-  enable_cdn                      = true
+  enable_cdn                      = false
   connection_draining_timeout_sec = 10
 
   backend {
