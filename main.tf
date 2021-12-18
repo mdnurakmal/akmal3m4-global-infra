@@ -56,7 +56,7 @@ resource "google_compute_backend_service" "game-client-backend-service" {
 
 resource "google_compute_url_map" "default" {
   name            = "test"
-  default_service = google_compute_backend_service.default.id
+  default_service = google_compute_backend_service.game-client-backend-service.id
 
   host_rule {
     hosts        = ["dronega.ga"]
@@ -65,16 +65,16 @@ resource "google_compute_url_map" "default" {
 
   path_matcher {
     name            = "allpaths"
-    default_service = google_compute_backend_service.default.id
+    default_service = google_compute_backend_service.game-client-backend-service.id
 
     path_rule {
       paths   = ["/client"]
-      service = "projects/group4-3m4/global/backendServices/game-client-backend-service"
+      service = google_compute_backend_service.game-client-backend-service.id
     }
 
         path_rule {
       paths   = ["/server"]
-      service = "projects/group4-3m4/global/backendServices/game-server-backend-service"
+      service = google_compute_backend_service.game-server-backend-service.id
     }
   }
 }
