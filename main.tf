@@ -110,7 +110,7 @@ resource "google_compute_target_http_proxy" "default" {
 }
 
 resource "google_compute_target_https_proxy" "default" {
-  name             = "test-proxy"
+  name             = "https-target-proxy"
   url_map          = google_compute_url_map.http.id
   ssl_certificates = [google_compute_managed_ssl_certificate.default.id]
 }
