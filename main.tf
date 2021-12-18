@@ -54,7 +54,7 @@ resource "google_compute_backend_service" "game-client-backend-service" {
 
 
 
-resource "google_compute_url_map" "default" {
+resource "google_compute_url_map" "http" {
   name            = "test"
   default_service = google_compute_backend_service.game-client-backend-service.id
 
@@ -79,7 +79,40 @@ resource "google_compute_url_map" "default" {
   }
 }
 
+# reserved ip
+
 resource "google_compute_global_address" "static-ip" {
   provider = google-beta
   name = "dronegaga-static-ip"
+}
+
+resource "google_compute_global_forwarding_rule" "http-forwarding-rule" {
+  name       = "http-forwarding-rule"
+  target     = google_compute_target_http_proxy.default.id
+  port_range = "80"
+}
+
+resource "google_compute_global_forwarding_rule" "https-forwarding-rule" {
+  name       = "https-forwarding-rule"
+  target     = google_compute_target_https_proxy.default.id
+  port_range = "443"
+}
+
+resource "google_compute_target_http_proxy" "default" {
+  name        = "http-target-proxy"
+  url_map     = google_compute_url_map.http.id
+}
+
+resource "google_compute_target_https_proxy" "default" {
+  name             = "test-proxy"
+  url_map          = google_compute_url_map.http.id
+  ssl_certificates = [google_compute_ssl_certificate.default.id]
+}
+
+resource "google_compute_managed_ssl_certificate" "default" {
+  name = "ssl-cert-dronega"
+
+  managed {
+    domains = ["dronega.ga"]
+  }
 }
