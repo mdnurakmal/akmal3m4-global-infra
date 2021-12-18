@@ -55,7 +55,7 @@ resource "google_compute_backend_service" "game-client-backend-service" {
 
 
 resource "google_compute_url_map" "http" {
-  name            = "test"
+  name            = "https-lb"
   default_service = google_compute_backend_service.game-client-backend-service.id
 
   host_rule {
