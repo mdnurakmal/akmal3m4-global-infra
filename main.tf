@@ -131,6 +131,7 @@ resource "google_compute_managed_ssl_certificate" "default" {
 }
 
 
+
 /* move to global infra only
 resource "google_service_account" "cloudrun-sa" {
   account_id   = "cloudrun-sa"
