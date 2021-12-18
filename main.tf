@@ -22,7 +22,7 @@ provider "google" {
 resource "google_compute_backend_service" "game-server-backend-service" {
   provider = google-beta
   project = var.project_id
-  name                            = "game-server-backend-service-${var.multiregion}"
+  name                            = "game-server-backend-service"
   enable_cdn                      = true
   connection_draining_timeout_sec = 10
 
@@ -30,7 +30,7 @@ resource "google_compute_backend_service" "game-server-backend-service" {
   group = "projects/${var.project_id}/regions/asia-southeast1/networkEndpointGroups/game-server-asia-neg"
   }
 
-    backend {
+  backend {
   group = "projects/${var.project_id}/regions/us-central1/networkEndpointGroups/game-server-us-neg"
   }
 
@@ -40,7 +40,7 @@ resource "google_compute_backend_service" "game-server-backend-service" {
 resource "google_compute_backend_service" "game-client-backend-service" {
   provider = google-beta
   project = var.project_id
-  name                            = "game-client-backend-service-${var.multiregion}"
+  name                            = "game-client-backend-service"
   enable_cdn                      = true
   connection_draining_timeout_sec = 10
 
@@ -48,7 +48,7 @@ resource "google_compute_backend_service" "game-client-backend-service" {
     group = "projects/${var.project_id}/regions/asia-southeast1/networkEndpointGroups/game-client-asia-neg"
   }
 
-    backend {
+  backend {
     group = "projects/${var.project_id}/regions/us-central1/networkEndpointGroups/game-client-us-neg"
   }
 }
