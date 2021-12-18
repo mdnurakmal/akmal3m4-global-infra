@@ -91,7 +91,8 @@ resource "google_compute_global_forwarding_rule" "http-forwarding-rule" {
   target     = google_compute_target_http_proxy.default.id
   port_range = "80"
   ip_address = google_compute_global_address.static-ip.id
-  target = google_compute_target_http_proxy.default.id
+  load_balancing_scheme = "EXTERNAL"
+
 }
 
 resource "google_compute_global_forwarding_rule" "https-forwarding-rule" {
@@ -99,7 +100,8 @@ resource "google_compute_global_forwarding_rule" "https-forwarding-rule" {
   target     = google_compute_target_https_proxy.default.id
   port_range = "443"
   ip_address = google_compute_global_address.static-ip.id
-  target = google_compute_target_https_proxy.default.id
+  load_balancing_scheme = "EXTERNAL"
+
 }
 
 resource "google_compute_target_http_proxy" "default" {
