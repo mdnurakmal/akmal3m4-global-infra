@@ -24,7 +24,7 @@ resource "google_compute_backend_service" "game-server-backend-service" {
   name                            = "game-server-backend-service"
   enable_cdn                      = true
   connection_draining_timeout_sec = 10
-
+  health_checks = [google_compute_health_check.default.id]
   backend {
   group = "projects/${var.project_id}/regions/asia-southeast1/networkEndpointGroups/game-server-asia-neg"
   }
@@ -42,7 +42,7 @@ resource "google_compute_backend_service" "game-client-backend-service" {
   name                            = "game-client-backend-service"
   enable_cdn                      = true
   connection_draining_timeout_sec = 10
-
+  health_checks = [google_compute_health_check.default.id]
   backend {
     group = "projects/${var.project_id}/regions/asia-southeast1/networkEndpointGroups/game-client-asia-neg"
   }
@@ -52,6 +52,12 @@ resource "google_compute_backend_service" "game-client-backend-service" {
   }
 }
 
+resource "google_compute_http_health_check" "default" {
+  name               = "check-backend"
+  request_path       = "/"
+  check_interval_sec = 1
+  timeout_sec        = 1
+}
 
 
 resource "google_compute_url_map" "http" {
@@ -131,3 +137,36 @@ resource "google_compute_managed_ssl_certificate" "default" {
     domains = ["dronega.ga"]
   }
 }
+
+
+/* move to global infra only
+resource "google_service_account" "cloudrun-sa" {
+  account_id   = "cloudrun-sa"
+  display_name = "cloudrun-sa"
+}
+
+resource "google_service_account_iam_member" "cloudrun-iam" {
+  role               = "roles/run.serviceAgent"
+  service_account_id = google_service_account.cloudrun-sa.name
+
+  member = "serviceAccount:${google_service_account.cloudrun-sa.email}"
+  
+  depends_on = [google_service_account.cloudrun-sa]
+}
+
+resource "google_cloud_run_service_iam_member" "game-server-invoker" {
+  location = google_cloud_run_service.game-server.location
+  project = google_cloud_run_service.game-server.project
+  service = google_cloud_run_service.game-server.name
+  role = "roles/run.invoker"
+  member = "allAuthenticatedUsers"
+}
+
+resource "google_cloud_run_service_iam_member" "game-client-invoker" {
+  location = google_cloud_run_service.game-client.location
+  project = google_cloud_run_service.game-client.project
+  service = google_cloud_run_service.game-client.name
+  role = "roles/run.invoker"
+  member = "allAuthenticatedUsers"
+}
+*/
