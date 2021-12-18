@@ -89,10 +89,10 @@ resource "google_compute_global_address" "static-ip" {
 resource "google_compute_global_forwarding_rule" "http-forwarding-rule" {
   name       = "http-forwarding-rule"
   target     = google_compute_target_http_proxy.default.id
-  port_range = "80"
+  port_range = "80,8080"
   #ip_address = google_compute_global_address.static-ip.id
   load_balancing_scheme = "EXTERNAL"
-
+  ip_version = "IPV4"
 }
 
 resource "google_compute_global_forwarding_rule" "https-forwarding-rule" {
@@ -101,6 +101,7 @@ resource "google_compute_global_forwarding_rule" "https-forwarding-rule" {
   port_range = "443"
   #ip_address = google_compute_global_address.static-ip.id
   load_balancing_scheme = "EXTERNAL"
+  ip_version = "IPV4"
 
 }
 
