@@ -99,7 +99,7 @@ resource "google_compute_global_forwarding_rule" "https-forwarding-rule" {
   name       = "https-forwarding-rule"
   target     = google_compute_target_https_proxy.default.id
   port_range = "443"
-  ip_address = "0.0.0.0"
+  ip_address = google_compute_global_address.static-ip.id
   load_balancing_scheme = "EXTERNAL"
 
 
