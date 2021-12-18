@@ -78,3 +78,8 @@ resource "google_compute_url_map" "default" {
     }
   }
 }
+
+resource "google_compute_global_address" "static-ip" {
+  provider = google-beta
+  name = "dronegaga-static-ip"
+}
