@@ -24,7 +24,7 @@ resource "google_compute_backend_service" "game-server-backend-service" {
   name                            = "game-server-backend-service"
   enable_cdn                      = true
   connection_draining_timeout_sec = 10
-  health_checks = [google_compute_health_check.default.id]
+  health_checks = [google_compute_http_health_check.default.id]
   backend {
   group = "projects/${var.project_id}/regions/asia-southeast1/networkEndpointGroups/game-server-asia-neg"
   }
@@ -42,7 +42,7 @@ resource "google_compute_backend_service" "game-client-backend-service" {
   name                            = "game-client-backend-service"
   enable_cdn                      = true
   connection_draining_timeout_sec = 10
-  health_checks = [google_compute_health_check.default.id]
+  health_checks = [google_compute_http_health_check.default.id]
   backend {
     group = "projects/${var.project_id}/regions/asia-southeast1/networkEndpointGroups/game-client-asia-neg"
   }
