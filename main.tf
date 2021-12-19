@@ -148,7 +148,7 @@ resource "google_service_account_iam_member" "cloudrun-iam" {
 
 */
 
-resource "google_compute_security_policy" "policy" {
+resource "google_compute_security_policy" "default" {
   name = "players-policy"
 
   rule {
