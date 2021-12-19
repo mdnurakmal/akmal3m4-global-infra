@@ -149,3 +149,29 @@ resource "google_service_account_iam_member" "cloudrun-iam" {
 
 
 */
+
+resource "google_compute_security_policy" "policy" {
+  name = "players-policy"
+
+  rule {
+    action   = "deny(403)"
+    priority = "1000"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["223.25.71.191"]
+      }
+    }
+  }
+
+  rule {
+    action   = "allow"
+    priority = "2147483647"
+    match {
+      versioned_expr = "SRC_IPS_V1"
+      config {
+        src_ip_ranges = ["*"]
+      }
+    }
+  }
+}
