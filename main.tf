@@ -50,6 +50,8 @@ resource "google_compute_backend_service" "game-client-backend-service" {
   backend {
     group = "projects/${var.project_id}/regions/us-central1/networkEndpointGroups/game-client-us-neg"
   }
+
+  security_policy = google_compute_security_policy.default.id
 }
 
 resource "google_compute_url_map" "http" {
@@ -70,10 +72,6 @@ resource "google_compute_url_map" "http" {
       service = google_compute_backend_service.game-client-backend-service.id
     }
 
-        path_rule {
-      paths   = ["/server"]
-      service = google_compute_backend_service.game-server-backend-service.id
-    }
   }
 }
 
