@@ -70,6 +70,10 @@ resource "google_compute_url_map" "http" {
     path_rule {
       paths   = ["/client"]
       service = google_compute_backend_service.game-client-backend-service.id
+
+         url_rewrite {
+          path_prefix_rewrite = "/"
+        }
     }
 
   }
