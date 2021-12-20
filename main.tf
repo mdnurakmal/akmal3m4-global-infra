@@ -79,6 +79,30 @@ resource "google_compute_url_map" "http" {
     
     }
 
+    path_rule {
+      paths   = ["/server"]
+      service = google_compute_backend_service.game-server-backend-service.id
+      
+        route_action {
+            url_rewrite {
+            path_prefix_rewrite = "/"
+          }
+        }
+    
+    }
+
+    path_rule {
+      paths   = ["/server/*"]
+      service = google_compute_backend_service.game-server-backend-service.id
+      
+        route_action {
+            url_rewrite {
+            path_prefix_rewrite = "/"
+          }
+        }
+    
+    }
+
   }
 }
 
