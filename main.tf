@@ -28,7 +28,7 @@ resource "google_compute_backend_service" "gke-backend-service" {
   health_checks = ["projects/${var.project_id}/global/healthChecks/mci-n6lbuv-8080-zoneprinter-zone-mcs"]
 
   backend {
-  group = "projects/${var.project_id}/zones/asia-southeast1-a/networkEndpointGroups/k8s1-4ffef35e-zoneprint-mci-zone-mcs-svc-lgq966x5m-808-e850700ag"
+  group = "projects/${var.project_id}/zones/asia-southeast1-a/networkEndpointGroups/k8s1-4ffef35e-zoneprint-mci-zone-mcs-svc-lgq966x5m-808-e850700a"
   }
 
   backend {
