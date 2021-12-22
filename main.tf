@@ -81,7 +81,7 @@ resource "google_compute_backend_service" "game-client-backend-service" {
 
 resource "google_compute_url_map" "http" {
   name            = "https-lb"
-  default_service = google_compute_backend_service.game-client-backend-service.id
+  default_service = google_compute_backend_service.gke-backend-service.id
 
   host_rule {
     hosts        = ["dronega.ga"]
