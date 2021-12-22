@@ -92,15 +92,42 @@ resource "google_compute_url_map" "http" {
     name            = "allpaths"
     default_service = google_compute_backend_service.gke-backend-service.id
 
+    
+      path_rule {
+      paths   = ["/authServer"]
+      service = google_compute_backend_service.game-server-backend-service.id
+      
+        route_action {
+            url_rewrite {
+            path_prefix_rewrite = "/server"
+          }
+        }
+    
+    }
+
+          path_rule {
+      paths   = ["/authServer/*"]
+      service = google_compute_backend_service.game-server-backend-service.id
+      
+        route_action {
+            url_rewrite {
+            path_prefix_rewrite = "/server/"
+          }
+        }
+    
+    }
+
     path_rule {
       paths   = ["/client"]
       service = google_compute_backend_service.game-client-backend-service.id
       
-        route_action {
-            url_rewrite {
-            path_prefix_rewrite = "/"
-          }
-        }
+    
+    }
+
+        path_rule {
+      paths   = ["/client/*"]
+      service = google_compute_backend_service.game-client-backend-service.id
+      
     
     }
 
@@ -134,29 +161,6 @@ resource "google_compute_url_map" "http" {
     
     }
 
-      path_rule {
-      paths   = ["/authServer"]
-      service = google_compute_backend_service.game-server-backend-service.id
-      
-        route_action {
-            url_rewrite {
-            path_prefix_rewrite = "/server"
-          }
-        }
-    
-    }
-
-          path_rule {
-      paths   = ["/authServer/*"]
-      service = google_compute_backend_service.game-server-backend-service.id
-      
-        route_action {
-            url_rewrite {
-            path_prefix_rewrite = "/server"
-          }
-        }
-    
-    }
 
 
 
