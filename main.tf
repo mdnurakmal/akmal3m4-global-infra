@@ -90,7 +90,7 @@ resource "google_compute_url_map" "http" {
 
   path_matcher {
     name            = "allpaths"
-    default_service = google_compute_backend_service.game-client-backend-service.id
+    default_service = google_compute_backend_service.gke-backend-service.id
 
     path_rule {
       paths   = ["/client"]
