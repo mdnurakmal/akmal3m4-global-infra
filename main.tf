@@ -17,6 +17,27 @@ provider "google" {
 }
 
 
+	
+
+resource "google_compute_backend_service" "gke-backend-service" {
+  provider = google-beta
+  project = var.project_id
+  name                            = "mci-n6lbuv-8080-zoneprinter-zone-mcs"
+  enable_cdn                      = false
+  connection_draining_timeout_sec = 10
+
+  backend {
+  group = "projects/${var.project_id}/zones/asia-southeast1-a/networkEndpointGroups/	
+k8s1-4ffef35e-zoneprint-mci-zone-mcs-svc-lgq966x5m-808-e850700ag"
+  }
+
+  backend {
+  group = "projects/${var.project_id}/zones/us-central1-c/networkEndpointGroups/{{name}}g"
+  }
+
+  security_policy = google_compute_security_policy.default.id
+}
+
 
 resource "google_compute_backend_service" "game-server-backend-service" {
   provider = google-beta
@@ -102,6 +123,38 @@ resource "google_compute_url_map" "http" {
         }
     
     }
+
+      path_rule {
+      paths   = ["/test"]
+      service = google_compute_backend_service.game-server-backend-service.id
+    
+    }
+
+      path_rule {
+      paths   = ["/authServer"]
+      service = google_compute_backend_service.game-server-backend-service.id
+      
+        route_action {
+            url_rewrite {
+            path_prefix_rewrite = "/server"
+          }
+        }
+    
+    }
+
+          path_rule {
+      paths   = ["/authServer/*"]
+      service = google_compute_backend_service.game-server-backend-service.id
+      
+        route_action {
+            url_rewrite {
+            path_prefix_rewrite = "/server"
+          }
+        }
+    
+    }
+
+
 
   }
 }
