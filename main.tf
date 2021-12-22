@@ -27,12 +27,11 @@ resource "google_compute_backend_service" "gke-backend-service" {
   connection_draining_timeout_sec = 10
 
   backend {
-  group = "projects/${var.project_id}/zones/asia-southeast1-a/networkEndpointGroups/	
-k8s1-4ffef35e-zoneprint-mci-zone-mcs-svc-lgq966x5m-808-e850700ag"
+  group = "projects/${var.project_id}/zones/asia-southeast1-a/networkEndpointGroups/k8s1-4ffef35e-zoneprint-mci-zone-mcs-svc-lgq966x5m-808-e850700ag"
   }
 
   backend {
-  group = "projects/${var.project_id}/zones/us-central1-c/networkEndpointGroups/{{name}}g"
+  group = "projects/${var.project_id}/zones/us-central1-c/networkEndpointGroups/k8s1-a0e525b8-zoneprint-mci-zone-mcs-svc-lgq966x5m-808-d990f9ae"
   }
 
   security_policy = google_compute_security_policy.default.id
