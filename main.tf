@@ -30,13 +30,13 @@ resource "google_compute_backend_service" "gke-backend-service" {
   backend {
   group = "projects/${var.project_id}/zones/asia-southeast1-a/networkEndpointGroups/k8s1-4ffef35e-zoneprint-mci-zone-mcs-svc-lgq966x5m-808-e850700a"
   balancing_mode ="RATE"
-  max_rate_per_instance ="100"
+  max_rate ="100"
   }
 
   backend {
   group = "projects/${var.project_id}/zones/us-central1-c/networkEndpointGroups/k8s1-a0e525b8-zoneprint-mci-zone-mcs-svc-lgq966x5m-808-d990f9ae"
   balancing_mode ="RATE"
-  max_rate_per_instance ="100"
+  max_rate ="100"
   }
 
   security_policy = google_compute_security_policy.default.id
