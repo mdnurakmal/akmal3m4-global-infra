@@ -58,6 +58,8 @@ resource "google_compute_backend_service" "game-server-backend-service" {
   group = "projects/${var.project_id}/regions/us-central1/networkEndpointGroups/game-server-us-neg"
   }
 
+  custom_request_headers          = ["X-Client-Geo-Location: {client_region},{client_city}"]
+
   security_policy = google_compute_security_policy.default.id
 }
 
@@ -75,6 +77,8 @@ resource "google_compute_backend_service" "game-client-backend-service" {
   backend {
     group = "projects/${var.project_id}/regions/us-central1/networkEndpointGroups/game-client-us-neg"
   }
+
+  custom_request_headers          = ["X-Client-Geo-Location: {client_region},{client_city}"]
 
   security_policy = google_compute_security_policy.default.id
 }
